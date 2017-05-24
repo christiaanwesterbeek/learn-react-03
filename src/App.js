@@ -2,63 +2,35 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  NavLink
+  Link
 } from 'react-router-dom'
 
-const isActiveFunc = (match, location) => {
-  console.log('isActiveFunc', match, location)
-  return match
-}
-
-const Links = () => {
-  return (
-    <nav>
-      <NavLink exact to="/">Home</NavLink>
-      <NavLink to="/page">Page</NavLink>
-      <NavLink activeStyle={{color: 'green'}} to={{pathname: '/about'}}>About</NavLink>
-      <NavLink
-        isActive={isActiveFunc}
-        to="/contact">Contact</NavLink>
-    </nav>
-  )
-}
-
-const Header = ({match}) => (
-  <div className="header">
-    <Route
-      path="/:page"
-      render={({match}) => {
-        return (
-          <h1>{match.params.page} header</h1>
-        )
-      }}
-    />
-  </div>
-)
-const Content = ({match}) => (
-  <div className="header">
-    <Route
-      path="/:page"
-      render={({match}) => {
-        return (
-          <p>{match.params.page} content</p>
-        )
-      }}
-    />
-  </div>
-)
-
-const Home = (props) => {
-  console.log('props', props)
+const Home = () => {
   return <h1>Home</h1>
 }
+
+const Menu = () => (
+  <div>
+    <h1>Menu</h1>
+    <Link to="/menu/food">Food</Link>
+    <Link to="/menu/drinks">Drinks</Link>
+    <Link to="/menu/sides">Sides</Link>
+    <Route
+      path="/menu/:section"
+      render={({match}) => (
+        <h2>{match.params.section}</h2>
+      )}
+    />
+  </div>
+)
 
 const App = () => (
   <Router>
     <div>
-      <Links></Links>
-      <Header />
-      <Content />
+      <Link to="/">Home</Link>
+      <Link to="/menu">Menu</Link>
+      <Route exact path="/" component={Home} />
+      <Route path="/menu" component={Menu} />
     </div>
   </Router>
 )
