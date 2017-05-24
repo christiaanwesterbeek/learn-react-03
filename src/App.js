@@ -45,6 +45,12 @@ const App = () => (
           <h2>SUBPAGE: {match.params.subpage || 'no subpage'}</h2>
         </div>
       )}></Route>
+      <Route path="/:a(\d{2}-\d{2}-\d{4}):b(\.[a-z]+)?/:subpage?" render={({match}) => (
+        <div>
+          <h1>paramA: {match.params.a }</h1>
+          <h2>paramB: {match.params.b}</h2>
+        </div>
+      )}></Route>
     </div>
   </Router>
 )
