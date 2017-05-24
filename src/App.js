@@ -1,42 +1,52 @@
 import React, { Component} from 'react';
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
+  HashRouter,
+  MemoryRouter,
+  StaticRouter,
+  NativeRouter,
   Route,
-  Link,
-  Prompt
+  Link
 } from 'react-router-dom'
 
-const Home = () => (
-  <h1>Home</h1>
+const LinksRoutes = () => (
+  <div>
+    <Link to="/">Home</Link>
+    <Link to="/about">About</Link>
+    <Route exact path="/" render={() => <h1>Home</h1>} />
+    <Route path="/about" render={() => <h1>About</h1>} />
+  </div>
 )
 
-class Form extends Component {
-  state = {dirty: false}
-  setDirty = () => this.setState({dirty: true})
-  render() {
-    return (
-      <div>
-        <h1>Form: {this.state.dirty ? 'dirty' : 'not dirty'}</h1>
-        <input type="text" onInput={this.setDirty} />
-        <Prompt
-          message="Data will be lost"
-          when={this.state.dirty}
-        />
-
-      </div>
-    )
-  }
+const forceRefresh = () => {
+  console.log(new Date())
+  return false
 }
 
-const App = () => (
-  <Router>
-    <div>
-      <Link to="/">Home</Link>
-      <Link to="/form">Form</Link>
-      <Route exact path="/" component={Home} />
-      <Route path="/form" component={Form} />
-    </div>
-  </Router>
+const BrowserRouterApp = () => (
+  <BrowserRouter forceRefresh={forceRefresh()}>
+    <LinksRoutes />
+  </BrowserRouter>
 )
 
-export default App
+const HashRouterApp = () => (
+  <HashRouter hashType="hashbang">
+    <LinksRoutes />
+  </HashRouter>
+)
+
+const MemoryRouterApp = () => (
+  <MemoryRouter
+    initialEntries={['/', '/about']}
+    initialIndex={0}
+  >
+    <LinksRoutes />
+  </MemoryRouter>
+)
+
+const StaticRouterApp = () => (
+  <StaticRouter location="/about" context={{}}>
+    <LinksRoutes />
+  </StaticRouter>
+)
+export default StaticRouterApp
