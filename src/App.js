@@ -14,6 +14,7 @@ const Links = () => {
   return (
     <nav>
       <NavLink exact to="/">Home</NavLink>
+      <NavLink to="/page">Page</NavLink>
       <NavLink activeStyle={{color: 'green'}} to={{pathname: '/about'}}>About</NavLink>
       <NavLink
         isActive={isActiveFunc}
@@ -38,6 +39,12 @@ const App = () => (
           match && <h1>About</h1>
         )}></Route>
       <Route path="/contact" render={() => <h1>Contact</h1>}></Route>
+      <Route path="/:page?/:subpage?" render={({match}) => (
+        <div>
+          <h1>PAGE: {match.params.page || 'Home'}</h1>
+          <h2>SUBPAGE: {match.params.subpage || 'no subpage'}</h2>
+        </div>
+      )}></Route>
     </div>
   </Router>
 )
